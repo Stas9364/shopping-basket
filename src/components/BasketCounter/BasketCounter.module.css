@@ -1,0 +1,29 @@
+.basketCounter {
+    display: flex;
+    width: 109px;
+    margin: 0 auto;
+}
+
+.basketCounter_minus_plus {
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+}
+.basketCounter_minus_plus img {
+    width: 25px;
+    height: 25px;
+}
+
+.inputWrap {
+    width: 45px;
+    height: 10px;
+    padding: 0;
+}
+
+.inputWrap input {
+    height: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(37 37 37);
+}
+
