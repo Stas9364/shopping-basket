@@ -10,9 +10,13 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {Avatar, Menu, MenuItem} from "@mui/material";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {NavLink} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../utils";
+import {theme, useAppDispatch, useAppSelector} from "../../utils";
 import {logoutAC} from "../../Pages/Login/authAction";
 import {auth} from "../../firebase/firebase";
+import { ThemeProvider } from '@mui/material/styles';
+import {cartSelector} from "../../Pages";
+
+
 
 
 export function Navbar() {
@@ -41,16 +45,17 @@ export function Navbar() {
         dispatch(logoutAC());
     };
 
-    const goodsQuantity = useAppSelector(state => state.card);
+    const goodsQuantity = useAppSelector(cartSelector);
 
     return (
         <Box sx={{flexGrow: 1}}>
-            <AppBar position="static">
-                <Toolbar>
+            <ThemeProvider theme={theme}>
+            <AppBar position="static"  color={"secondary"}>
+                <Toolbar >
                     <IconButton
                         size="large"
                         edge="start"
-                        color="inherit"
+                        color="primary"
                         aria-label="open drawer"
                         aria-controls={open ? 'basic-menu' : undefined}
                         aria-haspopup="true"
@@ -73,6 +78,7 @@ export function Navbar() {
                     </Menu>
 
                     <Typography
+                        color={'#005267'}
                         variant="h6"
                         noWrap
                         component="div"
@@ -81,7 +87,7 @@ export function Navbar() {
                         STORE
                     </Typography>
 
-                    <NavLink to={'/create-product'}> Create</NavLink>
+                    {/*<NavLink to={'/create-product'}> Create</NavLink>*/}
 
                     <Box sx={{flexGrow: 1}}/>
                     {user && <Box sx={{display: {xs: 'none', md: 'flex'}}}>
@@ -90,12 +96,13 @@ export function Navbar() {
                                      textDecoration: 'none',
                                      position: 'absolute',
                                      right: '70px',
-                                     top: '10px'
+                                     top: '10px',
+                                     color: '#005267'
                                  }}>
                             <IconButton size="large" aria-label="show 4 new mails" color="inherit"
                                         onClick={toCard}
                             >
-                                <Badge badgeContent={goodsQuantity.length} color="error">
+                                <Badge badgeContent={goodsQuantity.length} color={"error"}>
                                     <ShoppingCartIcon/>
                                 </Badge>
                             </IconButton>
@@ -111,6 +118,7 @@ export function Navbar() {
                     </Box>}
                 </Toolbar>
             </AppBar>
+            </ThemeProvider>
         </Box>
     );
 }

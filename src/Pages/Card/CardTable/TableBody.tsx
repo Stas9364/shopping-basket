@@ -4,20 +4,21 @@ import {BasketCounter} from "../../../components";
 import {useAppDispatch, useAppSelector} from "../../../utils";
 import {useCollectionData} from "react-firebase-hooks/firestore";
 import {createData} from "../../../utils";
-import {addQuantityAndPriceAC, deleteFromCardAC} from "../cardReducer";
+import {addQuantityAndPriceAC, deleteFromCartAC} from "../cartReducer";
 import {selectProductTC} from "../../Goods/goodsReducer";
 import {collection, db} from "../../../firebase/firebase";
+import {cartSelector} from "../selectors";
 
-export const CardTableBody = () => {
+export const CartTableBody = () => {
     const dispatch = useAppDispatch();
-    const [goods, loading] = useCollectionData(collection(db, 'Products'));
+    const [goods] = useCollectionData(collection(db, 'Products'));
 
-    const order = useAppSelector(state => state.card);
+    const order = useAppSelector(cartSelector);
 
     const product = order.map(el => createData(el.id, el.title, el.price, el.image, el.quantity));
 
-    const deleteFromCard = (id: string) => {
-        dispatch(deleteFromCardAC(id));
+    const deleteFromCart = (id: string) => {
+        dispatch(deleteFromCartAC(id));
         dispatch(selectProductTC(id, false));
     };
 
@@ -46,7 +47,7 @@ export const CardTableBody = () => {
                     <TableCell align="center" component="th" scope="row">
                         <img src={p.image} alt="img" style={{width: '100px', height: '100px'}}/>
                         <div
-                            onClick={() => deleteFromCard(p.id)}
+                            onClick={() => deleteFromCart(p.id)}
                             style={{cursor: 'pointer'}}
                         >delete
                         </div>

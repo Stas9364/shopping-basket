@@ -1,7 +1,7 @@
 import {AppThunk} from "../../reduxStore/reduxStore";
 import {AUTH, logoutAC} from "../Login/authAction";
 import {doc, getDocs, query, updateDoc} from "firebase/firestore";
-import {InitialStateType} from "../Card/cardReducer";
+import {InitialStateType} from "../Card/cartReducer";
 import {addDoc, collection, db} from "../../firebase/firebase";
 
 enum GOODS {
@@ -19,7 +19,7 @@ export type ProductType = {
     "isSelected": boolean
 }
 
-const initialState: Array<ProductType> = [];
+export const initialState: Array<ProductType> = [];
 
 export const goodsReducer = (state: Array<ProductType> = initialState, action: GoodsActionsType): Array<ProductType> => {
     switch (action.type) {

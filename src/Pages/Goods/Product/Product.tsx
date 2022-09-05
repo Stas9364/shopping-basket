@@ -5,6 +5,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import {ThemeProvider} from "@mui/material/styles";
+import {theme} from "../../../utils";
 
 type ProductPropsType = {
     "id": string
@@ -15,6 +17,7 @@ type ProductPropsType = {
     "isSelected": boolean
     "sendToCard": (id: string) => void
 }
+
 
 export const Product: React.FC<ProductPropsType> = ({
                                                    title,
@@ -30,7 +33,7 @@ export const Product: React.FC<ProductPropsType> = ({
     const onSendToCard = () => sendToCard(id);
 
     return (
-        <Card sx={{maxWidth: 250}} style={{margin: '10px'}}>
+        <Card sx={{maxWidth: 250}} style={{margin: '10px', backgroundColor: '#f0f8ff'}}>
             <CardMedia
                 component="img"
                 image={image}
@@ -49,10 +52,12 @@ export const Product: React.FC<ProductPropsType> = ({
                 </Typography>
             </CardContent>
             <CardActions style={{justifyContent: 'center', alignItems: 'center'}}>
+                <ThemeProvider theme={theme}>
                 {isSelected
-                    ? <Button size="small" variant="outlined">In card</Button>
-                    : <Button size="small" onClick={onSendToCard}>Buy</Button>
+                    ? <Button size="small" variant="outlined" color={"primary"}>In card</Button>
+                    : <Button size="small" onClick={onSendToCard} color={"primary"}>Buy</Button>
                 }
+                </ThemeProvider>
             </CardActions>
         </Card>
     );

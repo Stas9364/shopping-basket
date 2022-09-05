@@ -4,26 +4,25 @@ import {Navigate} from "react-router-dom";
 import {Product} from "./Product/Product";
 import {useAppDispatch, useAppSelector} from "../../utils";
 import {Container, Grid} from "@mui/material";
-import {useCollectionData} from "react-firebase-hooks/firestore";
 import {getGoodsTC, selectProductTC} from "./goodsReducer";
-import {addToCardAC, InitialStateType} from "../Card/cardReducer";
-import {auth, collection, db} from "../../firebase/firebase";
+import {addToCartAC, InitialStateType} from "../Card/cartReducer";
+import {auth} from "../../firebase/firebase";
+import {goodsSelector} from "./selectors";
 
 export const Goods = () => {
     const dispatch = useAppDispatch();
 
     const [user] = useAuthState(auth);
-    const [goodsArr, loading] = useCollectionData(collection(db, 'Products'));
 
     useEffect(() => {
         dispatch(getGoodsTC());
     }, [dispatch]);
 
-    const goods = useAppSelector(state => state.goods);
+    const goods = useAppSelector(goodsSelector);
 
-    const sendToCard = async (id: string) => {
+    const sendToCart = async (id: string) => {
         dispatch(
-            addToCardAC(
+            addToCartAC(
                 goods.find(p => p.id === id) as InitialStateType
             )
         );
@@ -47,7 +46,7 @@ export const Goods = () => {
                             description={el.description}
                             image={el.image}
                             isSelected={el.isSelected}
-                            sendToCard={sendToCard}
+                            sendToCard={sendToCart}
                         />
                     )
                 })}

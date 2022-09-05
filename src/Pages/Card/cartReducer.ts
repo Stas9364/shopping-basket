@@ -1,6 +1,6 @@
-enum CARD {
-    ADD_TO_CARD = 'ADD_TO_CARD',
-    DELETE_FROM_CARD = 'DELETE_FROM_CARD',
+enum CART {
+    ADD_TO_CART = 'ADD_TO_CART',
+    DELETE_FROM_CART = 'DELETE_FROM_CART',
     ADD_QUANTITY_AND_PRICE = "ADD_QUANTITY_AND_PRICE"
 }
 
@@ -14,15 +14,15 @@ export type InitialStateType = {
     "quantity": number
 }
 
-const initialState: Array<InitialStateType> = [];
+export const initialState: Array<InitialStateType> = [];
 
-export const cardReducer = (state: Array<InitialStateType> = initialState, action: CardActionsType): Array<InitialStateType> => {
+export const cartReducer = (state: Array<InitialStateType> = initialState, action: CartActionsType): Array<InitialStateType> => {
     switch (action.type) {
-        case CARD.ADD_TO_CARD:
+        case CART.ADD_TO_CART:
             return [...state, {...action.product, quantity: 1}];
-        case CARD.DELETE_FROM_CARD:
+        case CART.DELETE_FROM_CART:
             return state.filter(el => el.id !== action.id);
-        case CARD.ADD_QUANTITY_AND_PRICE:
+        case CART.ADD_QUANTITY_AND_PRICE:
             return state.map(el => {
                 return el.id === action.id
                     ? {...el, quantity: action.quantity, price: (action.productPrice * action.quantity)}
@@ -33,12 +33,12 @@ export const cardReducer = (state: Array<InitialStateType> = initialState, actio
     }
 };
 
-export type CardActionsType =
-    | ReturnType<typeof addToCardAC>
-    | ReturnType<typeof deleteFromCardAC>
+export type CartActionsType =
+    | ReturnType<typeof addToCartAC>
+    | ReturnType<typeof deleteFromCartAC>
     | ReturnType<typeof addQuantityAndPriceAC>
 
-export const addToCardAC = (product: InitialStateType) => ({type: CARD.ADD_TO_CARD, product} as const);
-export const deleteFromCardAC = (id: string) => ({type: CARD.DELETE_FROM_CARD, id} as const);
+export const addToCartAC = (product: InitialStateType) => ({type: CART.ADD_TO_CART, product} as const);
+export const deleteFromCartAC = (id: string) => ({type: CART.DELETE_FROM_CART, id} as const);
 export const addQuantityAndPriceAC = (quantity: number, id: string, productPrice: number) => (
-    {type: CARD.ADD_QUANTITY_AND_PRICE, id, quantity, productPrice} as const);
+    {type: CART.ADD_QUANTITY_AND_PRICE, id, quantity, productPrice} as const);

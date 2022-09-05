@@ -2,7 +2,7 @@ import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {GoodsActionsType, goodsReducer} from "../Pages/Goods/goodsReducer";
 import {AuthActionsType} from "../Pages/Login/authAction";
-import {CardActionsType, cardReducer} from "../Pages/Card/cardReducer";
+import {CartActionsType, cartReducer} from "../Pages/Card/cartReducer";
 
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
@@ -13,7 +13,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, 
 export type AppActionsType =
     | GoodsActionsType
     | AuthActionsType
-    | CardActionsType;
+    | CartActionsType;
 
 const persistConfig = {
     key: 'root',
@@ -23,7 +23,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     goods: goodsReducer,
-    card: cardReducer
+    cart: cartReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

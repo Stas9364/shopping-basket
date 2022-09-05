@@ -1,21 +1,21 @@
 import React from 'react';
 import {Container} from "@mui/material";
-import {CardTable} from "./CardTable/CardTable";
+import {CartTable} from "./CardTable/CartTable";
 import {Navigate} from "react-router-dom";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "../../firebase/firebase";
 
 
-export const Card = () => {
+export const Cart = () => {
     const [user] = useAuthState(auth);
-    console.log(process.env)
+
     if (!user) {
         return <Navigate to={'/'}/>
     }
 
     return (
         <Container>
-            <CardTable/>
+            <CartTable/>
         </Container>
     );
 };

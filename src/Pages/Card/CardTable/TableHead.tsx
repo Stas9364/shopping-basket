@@ -1,7 +1,7 @@
 import React from 'react';
 import {TableCell, TableHead, TableRow} from "@mui/material";
 
-export const CardTableHead = () => {
+export const CartTableHead = () => {
     return (
         <TableHead>
             <TableRow>

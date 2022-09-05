@@ -1,12 +1,25 @@
 import {Login} from "./Login/Login";
 import {Goods} from "./Goods/Goods";
 import {Product} from "./Goods/Product/Product";
-import {Card} from "./Card/Card";
-import {CardTable} from "./Card/CardTable/CardTable";
-import {CardTableHead} from "./Card/CardTable/TableHead";
-import {CardTableBody} from "./Card/CardTable/TableBody";
-import {CardTableFooter} from "./Card/CardTable/TableFooter";
+import {Cart} from "./Card/Cart";
+import {CartTable} from "./Card/CardTable/CartTable";
+import {CartTableHead} from "./Card/CardTable/TableHead";
+import {CartTableBody} from "./Card/CardTable/TableBody";
+import {CartTableFooter} from "./Card/CardTable/TableFooter";
 import {ProductType} from './Goods/goodsReducer';
+import {goodsSelector} from "./Goods/selectors";
+import {cartSelector} from "./Card/selectors";
 
-export {Card, Login, Goods, Product, CardTableFooter, CardTableBody, CardTable, CardTableHead};
+export {
+    Cart,
+    Login,
+    Goods,
+    Product,
+    CartTableFooter,
+    CartTableBody,
+    CartTable,
+    CartTableHead,
+    goodsSelector,
+    cartSelector
+};
 export type { ProductType };
