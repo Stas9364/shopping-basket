@@ -18,7 +18,7 @@ export type AppActionsType =
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['card']
+    whitelist: ['cart']
 }
 
 const rootReducer = combineReducers({
