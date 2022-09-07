@@ -1,13 +1,14 @@
 import {AppThunk} from "../../reduxStore/reduxStore";
 import {AUTH, logoutAC} from "../Login/authAction";
-import {doc, getDocs, query, updateDoc} from "firebase/firestore";
+import {getDocs, query} from "firebase/firestore";
 import {InitialStateType} from "../Card/cartReducer";
 import {addDoc, collection, db} from "../../firebase/firebase";
+import {changeIsSelectedStatus} from "../../utils";
 
 enum GOODS {
     GET_GOODS = 'GET_GOODS',
     CREATE_PRODUCT = 'CREATE_PRODUCT',
-    SELECT_PRODUCT = 'SELECT_PRODUCT'
+    SELECT_PRODUCT = 'SELECT_PRODUCT',
 }
 
 export type ProductType = {
@@ -18,6 +19,8 @@ export type ProductType = {
     "image": string
     "isSelected": boolean
 }
+
+
 
 export const initialState: Array<ProductType> = [];
 
@@ -61,28 +64,20 @@ export const getGoodsTC = (): AppThunk => async (dispatch) => {
         prodCollection.docs.forEach((p) => goodsArr.push(p.data() as InitialStateType)) ;
     }
     dispatch(getGoodsAC(goodsArr));
-}
+
+    localStorage.setItem('goods', JSON.stringify(goodsArr));
+};
+
+export const getGoodsFromLS = (): AppThunk => (dispatch) => {
+    // @ts-ignore
+    dispatch(getGoodsAC(JSON.parse(localStorage.getItem('goods'))));
+};
 
 export const createProductTC = (product: ProductType): AppThunk => async () => {
     await addDoc(collection(db, 'Products'), product);
 };
 
 export const selectProductTC = (id: string, isSelected: boolean): AppThunk => async (dispatch) => {
-    //get collection
-    const prod = await getDocs(query(collection(db, 'Products')));
-
-    //snap is document of collection
-    for (let snap of prod.docs) {
-
-        //find each element of collection
-        const data = snap.data();
-        if (data.id === id) {
-
-            //snap.id is ID of document
-            await updateDoc(doc(db, 'Products', snap.id),
-                {isSelected}
-            );
-        }
-    }
+    changeIsSelectedStatus(id, isSelected);
     dispatch(selectProductAC(id, isSelected));
-}
+};

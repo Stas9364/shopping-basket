@@ -1,10 +1,9 @@
 import React from 'react';
 import {TableBody, TableCell, TableRow} from "@mui/material";
 import {BasketCounter} from "../../../components";
-import {useAppDispatch, useAppSelector} from "../../../utils";
+import {createData, useAppDispatch, useAppSelector} from "../../../utils";
 import {useCollectionData} from "react-firebase-hooks/firestore";
-import {createData} from "../../../utils";
-import {addQuantityAndPriceAC, deleteFromCartAC} from "../cartReducer";
+import {addQuantityAndPriceAC, deleteFromCartTC} from "../cartReducer";
 import {selectProductTC} from "../../Goods/goodsReducer";
 import {collection, db} from "../../../firebase/firebase";
 import {cartSelector} from "../selectors";
@@ -18,7 +17,7 @@ export const CartTableBody = () => {
     const product = order.map(el => createData(el.id, el.title, el.price, el.image, el.quantity));
 
     const deleteFromCart = (id: string) => {
-        dispatch(deleteFromCartAC(id));
+        dispatch(deleteFromCartTC(id, false));
         dispatch(selectProductTC(id, false));
     };
 

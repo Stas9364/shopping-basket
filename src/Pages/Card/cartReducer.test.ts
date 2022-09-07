@@ -27,7 +27,7 @@ test('delete product from cart', () => {
         "quantity": 2
     }];
 
-    const endState = cartReducer(initState, deleteFromCartAC(testState.id));
+    const endState = cartReducer(initState, deleteFromCartAC(testState.id, false));
 
     expect(endState.length).toEqual(0);
 })

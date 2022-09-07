@@ -1,3 +1,6 @@
+import {AppThunk} from "../../reduxStore/reduxStore";
+import {changeIsSelectedStatus} from "../../utils";
+
 enum CART {
     ADD_TO_CART = 'ADD_TO_CART',
     DELETE_FROM_CART = 'DELETE_FROM_CART',
@@ -21,7 +24,11 @@ export const cartReducer = (state: Array<InitialStateType> = initialState, actio
         case CART.ADD_TO_CART:
             return [...state, {...action.product, quantity: 1}];
         case CART.DELETE_FROM_CART:
-            return state.filter(el => el.id !== action.id);
+            return state
+                .filter(el => el.id !== action.id)
+                .map(el => el.id === action.id
+                    ? {...el, isSelected: action.isSelected}
+                    : el);
         case CART.ADD_QUANTITY_AND_PRICE:
             return state.map(el => {
                 return el.id === action.id
@@ -39,6 +46,11 @@ export type CartActionsType =
     | ReturnType<typeof addQuantityAndPriceAC>
 
 export const addToCartAC = (product: InitialStateType) => ({type: CART.ADD_TO_CART, product} as const);
-export const deleteFromCartAC = (id: string) => ({type: CART.DELETE_FROM_CART, id} as const);
+export const deleteFromCartAC = (id: string, isSelected: boolean) => ({type: CART.DELETE_FROM_CART, id, isSelected} as const);
 export const addQuantityAndPriceAC = (quantity: number, id: string, productPrice: number) => (
     {type: CART.ADD_QUANTITY_AND_PRICE, id, quantity, productPrice} as const);
+
+export const deleteFromCartTC = (id: string, isSelected: boolean): AppThunk => (dispatch) => {
+    changeIsSelectedStatus(id, isSelected);
+    dispatch(deleteFromCartAC(id, isSelected));
+};

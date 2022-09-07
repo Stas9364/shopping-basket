@@ -5,7 +5,7 @@ import {AuthActionsType} from "../Pages/Login/authAction";
 import {CartActionsType, cartReducer} from "../Pages/Card/cartReducer";
 
 import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import storage from 'redux-persist/lib/storage'
 
 export type AppStateType = ReturnType<typeof rootReducer>
 export type AppDispatch = ThunkDispatch<AppStateType, unknown, AppActionsType>;

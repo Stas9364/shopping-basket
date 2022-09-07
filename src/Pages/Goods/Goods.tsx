@@ -4,7 +4,7 @@ import {Navigate} from "react-router-dom";
 import {Product} from "./Product/Product";
 import {useAppDispatch, useAppSelector} from "../../utils";
 import {Container, Grid} from "@mui/material";
-import {getGoodsTC, selectProductTC} from "./goodsReducer";
+import {getGoodsFromLS, getGoodsTC, selectProductTC} from "./goodsReducer";
 import {addToCartAC, InitialStateType} from "../Card/cartReducer";
 import {auth} from "../../firebase/firebase";
 import {goodsSelector} from "./selectors";
@@ -15,7 +15,11 @@ export const Goods = () => {
     const [user] = useAuthState(auth);
 
     useEffect(() => {
-        dispatch(getGoodsTC());
+        if ('goods' in localStorage) {
+            dispatch(getGoodsFromLS());
+        } else {
+            dispatch(getGoodsTC());
+        }
     }, [dispatch]);
 
     const goods = useAppSelector(goodsSelector);
